@@ -1,3 +1,4 @@
+from random import randint
 """This file should have our order classes in it."""
 
 class AbstractMelonOrder(object):
@@ -5,33 +6,35 @@ class AbstractMelonOrder(object):
     """Serves as a base class and refractor for class DomesticMelonOrder 
     and class InternationalMelonOrder"""
 
-
     def __init__(self, species, qty):
         """Initialize melon order attributes"""
 
         self.species = species
         self.qty = qty
         self.shipped = False
+        self.base_price = randint(5, 9)
+        # self.tax = 0
+
 
     def get_total(self):
         """Calculate price."""
 
-        base_price = 5
+        # self.base_price = 5
 
         if self.species == "Christmas":
             # Christmas = 1.5 * base_price
-            total = (1 + self.tax) * self.qty * (base_price * 1.5)
+            total = (1 + self.tax) * self.qty * (self.base_price * 1.5)
         else:
-            total = (1 + self.tax) * self.qty * base_price
+            total = (1 + self.tax) * self.qty * self.base_price
         return total
 
 
 # DO WE IMPORT RANDOM 
 
-    def get_base_price(self):
-        """Splurge pricing"""
-
-        self.base_price = rand.int( )
+    # def get_base_price(self):
+    # #     """Splurge pricing"""
+    #     base_price = 5 
+    # #     self.base_price = randint(5, 9)
 
     def mark_shipped(self):
         """Set shipped to true."""
@@ -85,22 +88,16 @@ class InternationalMelonOrder(object):
     #     return super ()
 
     def get_total(self):
-        """Calculate price."""
-
-        base_price = 5
-        total = (1 + self.tax) * self.qty * base_price
-        # return total
-
+    #     """Calculate price."""
 
         if self.qty < 10:
             # Christmas = 1.5 * base_price
             # total = ((1 + self.tax) * self.qty * base_price) + 3
+            total = super(InternationalMelonOrder, self).get_total() + 3
+        else:
+            total = super(InternationalMelonOrder, self).get_total()
 
-            total = total + 3
-
-        # else:
-        #     total = (1 + self.tax) * self.qty * base_price
-        return total
+        return total 
 
     # def mark_shipped(self):
     #     """Set shipped to true."""
@@ -117,6 +114,8 @@ class InternationalMelonOrder(object):
 
 
 class GovernmentMelonOrder(AbstractMelonOrder):
+
+
 
     def __init__(self, country_code):
     # def __init__(self, species, qty, country_code):
